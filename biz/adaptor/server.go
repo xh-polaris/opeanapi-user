@@ -6,10 +6,3 @@ type UserServer struct {
 	controller.IAuthController
 	controller.IMoneyController
 }
-
-func NewUserServer() *UserServer {
-	return &UserServer{
-		IAuthController:  controller.NewAuthController(),
-		IMoneyController: controller.NewMoneyController(),
-	}
-}

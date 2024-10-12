@@ -1,14 +1,19 @@
 package controller
 
+import (
+	"context"
+	"github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/user"
+	"github.com/xhpolaris/opeanapi-user/biz/application/service"
+)
+
 type IMoneyController interface {
-	// 实现idl中定义的所有rpc方法
+	SetRemain(ctx context.Context, req *user.SetRemainReq) (res *user.SetRemainResp, err error)
 }
 
 type MoneyController struct {
-	// 引入domain层的service
+	MoneyService *service.MoneyService
 }
 
-func NewMoneyController() *MoneyController {
-	// 需要依赖注入
-	return &MoneyController{}
+func (c *MoneyController) SetRemain(ctx context.Context, req *user.SetRemainReq) (res *user.SetRemainResp, err error) {
+	return c.MoneyService.SetRemain(ctx, req)
 }

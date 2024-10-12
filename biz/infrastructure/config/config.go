@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/zeromicro/go-zero/core/stores/cache"
 	"os"
 
 	"github.com/zeromicro/go-zero/core/service"
@@ -10,22 +11,19 @@ import (
 
 var config *Config
 
-type Auth struct {
-	SecretKey    string
-	PublicKey    string
-	AccessExpire int64
-}
-
-type Fish struct {
-	SignIn  []int64
-	Like    []int64
-	Content []int64
-	Comment []int64
+type Security struct {
+	Issue string
 }
 
 type Config struct {
 	service.ServiceConf
 	ListenOn string
+	Mongo    struct {
+		URL string
+		DB  string
+	}
+	Cache    cache.CacheConf
+	Security Security
 }
 
 func NewConfig() (*Config, error) {
