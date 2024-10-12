@@ -7,7 +7,7 @@ require (
 	github.com/cloudwego/hertz v0.9.3
 	github.com/google/wire v0.6.0
 	github.com/jinzhu/copier v0.4.0
-	github.com/xh-polaris/service-idl-gen-go v0.0.0-20241012061508-b0305c60fc0b
+	github.com/xh-polaris/service-idl-gen-go v0.0.0-20241012070900-14f43b3e8861
 	github.com/zeromicro/go-zero v1.7.2
 	go.mongodb.org/mongo-driver v1.16.1
 	golang.org/x/net v0.28.0

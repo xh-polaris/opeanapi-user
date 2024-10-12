@@ -59,7 +59,10 @@ func (m *MongoMapper) FindOne(ctx context.Context, id string) (*User, error) {
 	}
 	var user User
 	key := prefixUserCacheKey + oid.Hex()
-	err = m.conn.FindOne(ctx, key, &user, bson.M{consts.ID: oid})
+	err = m.conn.FindOne(ctx, key, &user, bson.M{
+		consts.ID:     oid,
+		consts.Status: bson.M{"$ne": consts.DeleteStatus},
+	})
 
 	switch {
 	case err == nil:

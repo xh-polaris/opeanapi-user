@@ -84,7 +84,7 @@ func (s *KeyService) GetKey(ctx context.Context, req *user.GetKeysReq) (*user.Ge
 
 func (s *KeyService) UpdateKey(ctx context.Context, req *user.UpdateKeyReq) (*user.UpdateKeyResp, error) {
 	id := req.Id
-	name := req.Name
+	name := *req.Name
 	status := req.Status
 	timestamp := req.Timestamp
 	expireTime := req.ExpireTime
@@ -95,10 +95,18 @@ func (s *KeyService) UpdateKey(ctx context.Context, req *user.UpdateKeyReq) (*us
 			Msg:  "key不存在或已删除",
 		}, err
 	}
-	oldKey.Name = *name
-	oldKey.Status = int(status.Number())
-	oldKey.Timestamp = time.Unix(*timestamp, 0)
-	oldKey.ExpireTime = oldKey.ExpireTime.Add(time.Duration(*expireTime))
+	if name != "" {
+		oldKey.Name = name
+	}
+	if status != nil {
+		oldKey.Status = int(status.Number())
+	}
+	if timestamp != nil {
+		oldKey.Timestamp = time.Unix(*timestamp, 0)
+	}
+	if expireTime != nil {
+		oldKey.ExpireTime = oldKey.ExpireTime.Add(time.Duration(*expireTime))
+	}
 	err = s.KeyMongoMapper.Update(ctx, oldKey)
 	if err != nil {
 		return &user.UpdateKeyResp{
