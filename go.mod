@@ -1,4 +1,4 @@
-module github.com/xhpolaris/opeanapi-user
+module github.com/xh-polaris/opeanapi-user
 
 go 1.21
 
