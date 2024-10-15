@@ -1,10 +1,10 @@
 package main
 
 import (
+	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/config"
+	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/util/log"
+	"github.com/xh-polaris/opeanapi-user/provider"
 	"github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/user/user"
-	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/config"
-	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/util/log"
-	"github.com/xhpolaris/opeanapi-user/provider"
 	"net"
 
 	"github.com/cloudwego/kitex/pkg/klog"

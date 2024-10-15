@@ -1,7 +1,7 @@
 package adaptor
 
 import (
-	"github.com/xhpolaris/opeanapi-user/biz/adaptor/controller"
+	"github.com/xh-polaris/opeanapi-user/biz/adaptor/controller"
 )
 
 type UserServer struct {

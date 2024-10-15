@@ -4,10 +4,10 @@ import (
 	"context"
 	"github.com/google/wire"
 	"github.com/jinzhu/copier"
+	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/consts"
+	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/mapper/key"
+	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/util"
 	"github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/user"
-	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/consts"
-	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/mapper/key"
-	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/util"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
 )

@@ -3,9 +3,9 @@ package service
 import (
 	"context"
 	"github.com/google/wire"
+	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/consts"
+	usermapper "github.com/xh-polaris/opeanapi-user/biz/infrastructure/mapper/user"
 	"github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/user"
-	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/consts"
-	usermapper "github.com/xhpolaris/opeanapi-user/biz/infrastructure/mapper/user"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
 )

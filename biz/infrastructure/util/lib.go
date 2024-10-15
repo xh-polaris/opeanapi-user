@@ -1,7 +1,7 @@
 package util
 
 import (
-	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/util/log"
+	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/util/log"
 	"strconv"
 	"sync"
 

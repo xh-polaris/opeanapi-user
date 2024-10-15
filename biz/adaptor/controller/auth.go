@@ -3,8 +3,8 @@ package controller
 import (
 	"context"
 	"github.com/google/wire"
+	"github.com/xh-polaris/opeanapi-user/biz/application/service"
 	"github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/user"
-	"github.com/xhpolaris/opeanapi-user/biz/application/service"
 )
 
 type IAuthController interface {

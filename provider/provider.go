@@ -2,14 +2,14 @@ package provider
 
 import (
 	"github.com/google/wire"
-	"github.com/xhpolaris/opeanapi-user/biz/adaptor/controller"
-	"github.com/xhpolaris/opeanapi-user/biz/application/service"
-	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/config"
-	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/mapper/key"
-	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/mapper/user"
+	"github.com/xh-polaris/opeanapi-user/biz/adaptor/controller"
+	"github.com/xh-polaris/opeanapi-user/biz/application/service"
+	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/config"
+	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/mapper/key"
+	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/mapper/user"
 )
 
-var AllProvider = wire.NewSet(
+var UserServerProvider = wire.NewSet(
 	ControllerSet,
 	ApplicationSet,
 	InfrastructureSet,

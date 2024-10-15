@@ -3,8 +3,8 @@ package user
 import (
 	"context"
 	"errors"
-	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/config"
-	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/consts"
+	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/config"
+	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/consts"
 	"github.com/zeromicro/go-zero/core/stores/monc"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
