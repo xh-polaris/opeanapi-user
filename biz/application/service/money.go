@@ -2,14 +2,57 @@ package service
 
 import (
 	"context"
+	"github.com/google/wire"
 	"github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/user"
-	"github.com/xhpolaris/opeanapi-user/biz/domain/service"
+	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/consts"
+	usermapper "github.com/xhpolaris/opeanapi-user/biz/infrastructure/mapper/user"
+	"strconv"
 )
 
-type MoneyService struct {
-	RemainService *service.RemainService
+type IMoneyService interface {
+	SetRemain(ctx context.Context, req *user.SetRemainReq) (*user.SetRemainResp, error)
 }
 
-func (s MoneyService) SetRemain(ctx context.Context, req *user.SetRemainReq) (*user.SetRemainResp, error) {
-	return s.RemainService.SetRemain(ctx, req)
+type MoneyService struct {
+	UserMongoMapper *usermapper.MongoMapper
+}
+
+var MoneyServiceSet = wire.NewSet(
+	wire.Struct(new(MoneyService), "*"),
+	wire.Bind(new(IMoneyService), new(*MoneyService)),
+)
+
+func (s *MoneyService) SetRemain(ctx context.Context, req *user.SetRemainReq) (*user.SetRemainResp, error) {
+	id := req.User.UserId
+	increment := req.Increment
+	var msg string
+	aUser, err := s.UserMongoMapper.FindOne(ctx, id)
+	if err != nil || aUser == nil {
+		return &user.SetRemainResp{
+			Done: false,
+			Msg:  "用户不存在或已删除",
+		}, err
+	}
+	remain := aUser.Remain
+	if increment > 0 {
+		remain += increment
+		msg = consts.RemainIncrease + strconv.FormatInt(increment, 10)
+	} else if remain+increment > 0 {
+		remain -= increment
+		msg = consts.RemainDecrease + strconv.FormatInt(increment, 10)
+	} else {
+		return &user.SetRemainResp{
+			Done: false,
+			Msg:  "余额不足",
+		}, err
+	}
+	aUser.Remain = remain
+	err = s.UserMongoMapper.Update(ctx, aUser)
+	if err != nil {
+		return &user.SetRemainResp{}, err
+	}
+	return &user.SetRemainResp{
+		Done: true,
+		Msg:  msg,
+	}, nil
 }

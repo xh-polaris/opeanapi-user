@@ -2,9 +2,9 @@ package service
 
 import (
 	"context"
+	"github.com/google/wire"
 	"github.com/jinzhu/copier"
 	"github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/user"
-	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/config"
 	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/consts"
 	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/mapper/key"
 	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/util"
@@ -12,10 +12,23 @@ import (
 	"time"
 )
 
-type KeyService struct {
-	Config         config.Config
-	KeyMongoMapper key.IMongoMapper
+type IKeyService interface {
+	CreateKey(ctx context.Context, req *user.CreateKeyReq) (*user.CreateKeyResp, error)
+	GetKey(ctx context.Context, req *user.GetKeysReq) (*user.GetKeysResp, error)
+	UpdateKey(ctx context.Context, req *user.UpdateKeyReq) (*user.UpdateKeyResp, error)
+	UpdateHosts(ctx context.Context, req *user.UpdateHostsReq) (*user.UpdateHostsResp, error)
+	RefreshKey(ctx context.Context, req *user.RefreshKeyReq) (*user.RefreshKeyResp, error)
+	DeleteKey(ctx context.Context, req *user.DeleteKeyReq) (*user.DeleteKeyResp, error)
 }
+
+type KeyService struct {
+	KeyMongoMapper *key.MongoMapper
+}
+
+var KeyServiceSet = wire.NewSet(
+	wire.Struct(new(KeyService), "*"),
+	wire.Bind(new(IKeyService), new(*KeyService)),
+)
 
 func (s *KeyService) CreateKey(ctx context.Context, req *user.CreateKeyReq) (*user.CreateKeyResp, error) {
 	userId := req.User.UserId
@@ -173,6 +186,7 @@ func (s *KeyService) RefreshKey(ctx context.Context, req *user.RefreshKeyReq) (*
 		Msg:  "刷新密钥成功",
 	}, nil
 }
+
 func (s *KeyService) DeleteKey(ctx context.Context, req *user.DeleteKeyReq) (*user.DeleteKeyResp, error) {
 	id := req.Id
 	err := s.KeyMongoMapper.Delete(ctx, id)

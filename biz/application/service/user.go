@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"github.com/google/wire"
 	"github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/user"
 	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/consts"
 	usermapper "github.com/xhpolaris/opeanapi-user/biz/infrastructure/mapper/user"
@@ -9,9 +10,20 @@ import (
 	"time"
 )
 
+type IUserService interface {
+	SignUp(ctx context.Context, req *user.SignUpReq) (*user.SignUpResp, error)
+	GetUserInfo(ctx context.Context, req *user.GetUserInfoReq) (*user.GetUserInfoResp, error)
+	SetUserInfo(ctx context.Context, req *user.SetUserInfoReq) (*user.SetUserInfoResp, error)
+}
+
 type UserService struct {
 	UserMongoMapper *usermapper.MongoMapper
 }
+
+var UserServiceSet = wire.NewSet(
+	wire.Struct(new(UserService), "*"),
+	wire.Bind(new(IUserService), new(*UserService)),
+)
 
 func (s *UserService) SignUp(ctx context.Context, req *user.SignUpReq) (*user.SignUpResp, error) {
 	id, err := primitive.ObjectIDFromHex(req.User.UserId)

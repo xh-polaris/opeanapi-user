@@ -26,3 +26,9 @@ const (
 	DefaultDeveloperName  = "开发者用户"
 	DefaultEnterpriseName = "企业用户"
 )
+
+// 提示词
+const (
+	RemainIncrease = "余额增加"
+	RemainDecrease = "余额减少"
+)

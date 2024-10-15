@@ -7,18 +7,42 @@
 package provider
 
 import (
+	"github.com/xhpolaris/opeanapi-user/biz/adaptor"
+	"github.com/xhpolaris/opeanapi-user/biz/adaptor/controller"
+	"github.com/xhpolaris/opeanapi-user/biz/application/service"
 	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/config"
+	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/mapper/key"
+	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/mapper/user"
 )
 
 // Injectors from wire.go:
 
-func NewProvider() (*Provider, error) {
+func NewProvider() (*adaptor.UserServer, error) {
 	configConfig, err := config.NewConfig()
 	if err != nil {
 		return nil, err
 	}
-	providerProvider := &Provider{
-		Config: configConfig,
+	mongoMapper := key.NewMongoMapper(configConfig)
+	keyService := &service.KeyService{
+		KeyMongoMapper: mongoMapper,
 	}
-	return providerProvider, nil
+	userMongoMapper := user.NewMongoMapper(configConfig)
+	userService := &service.UserService{
+		UserMongoMapper: userMongoMapper,
+	}
+	authController := &controller.AuthController{
+		KeyService:  keyService,
+		UserService: userService,
+	}
+	moneyService := &service.MoneyService{
+		UserMongoMapper: userMongoMapper,
+	}
+	moneyController := &controller.MoneyController{
+		MoneyService: moneyService,
+	}
+	userServer := &adaptor.UserServer{
+		IAuthController:  authController,
+		IMoneyController: moneyController,
+	}
+	return userServer, nil
 }

@@ -2,40 +2,36 @@ package provider
 
 import (
 	"github.com/google/wire"
+	"github.com/xhpolaris/opeanapi-user/biz/adaptor/controller"
+	"github.com/xhpolaris/opeanapi-user/biz/application/service"
 	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/config"
-)
-
-var provider *Provider
-
-func Init() {
-	var err error
-	provider, err = NewProvider()
-	if err != nil {
-		panic(err)
-	}
-}
-
-// Provider 提供controller依赖的对象
-type Provider struct {
-	Config *config.Config
-}
-
-func Get() *Provider {
-	return provider
-}
-
-var RPCSet = wire.NewSet()
-
-var ApplicationSet = wire.NewSet()
-
-var DomainSet = wire.NewSet()
-
-var InfrastructureSet = wire.NewSet(
-	config.NewConfig,
+	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/mapper/key"
+	"github.com/xhpolaris/opeanapi-user/biz/infrastructure/mapper/user"
 )
 
 var AllProvider = wire.NewSet(
+	ControllerSet,
 	ApplicationSet,
-	DomainSet,
 	InfrastructureSet,
+)
+
+var ControllerSet = wire.NewSet(
+	controller.AuthControllerSet,
+	controller.MoneyControllerSet,
+)
+
+var ApplicationSet = wire.NewSet(
+	service.KeyServiceSet,
+	service.UserServiceSet,
+	service.MoneyServiceSet,
+)
+
+var InfrastructureSet = wire.NewSet(
+	config.NewConfig,
+	MapperSet,
+)
+
+var MapperSet = wire.NewSet(
+	key.NewMongoMapper,
+	user.NewMongoMapper,
 )
