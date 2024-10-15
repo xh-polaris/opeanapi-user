@@ -44,7 +44,7 @@ func (m *MongoMapper) Insert(ctx context.Context, k *Key) error {
 	if k.ID.IsZero() {
 		k.ID = primitive.NewObjectID()
 		k.CreateTime = time.Now()
-		k.UpdateTime = time.Now()
+		k.UpdateTime = k.CreateTime
 	}
 	key := prefixKeyCacheKey + k.ID.Hex()
 	_, err := m.conn.InsertOne(ctx, key, k)
