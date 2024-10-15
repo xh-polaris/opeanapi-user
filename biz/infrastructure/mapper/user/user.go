@@ -10,10 +10,10 @@ type User struct {
 	Username   string             `bson:"username" json:"username"`
 	Role       int                `bson:"role" json:"role"`
 	Auth       bool               `bson:"auth" json:"auth"`
-	AuthId     string             `bson:"auth_id" json:"auth_id"`
+	AuthId     string             `bson:"auth_id" json:"authId"`
 	Remain     int64              `bson:"remain" json:"remain"`
 	Status     int                `bson:"status" json:"status"`
-	CreateTime time.Time          `bson:"create_time,omitempty" json:"create_time"`
-	UpdateTime time.Time          `bson:"update_time,omitempty" json:"update_time"`
-	DeleteTime time.Time          `bson:"delete_time,omitempty" json:"delete_time"`
+	CreateTime time.Time          `bson:"create_time,omitempty" json:"createTime"`
+	UpdateTime time.Time          `bson:"update_time,omitempty" json:"updateTime"`
+	DeleteTime time.Time          `bson:"delete_time,omitempty" json:"deleteTime"`
 }
