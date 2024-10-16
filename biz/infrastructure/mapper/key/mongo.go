@@ -2,9 +2,9 @@ package key
 
 import (
 	"errors"
-	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/config"
-	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/consts"
-	util "github.com/xh-polaris/opeanapi-user/biz/infrastructure/util/page"
+	"github.com/xh-polaris/openapi-user/biz/infrastructure/config"
+	"github.com/xh-polaris/openapi-user/biz/infrastructure/consts"
+	util "github.com/xh-polaris/openapi-user/biz/infrastructure/util/page"
 	"github.com/xh-polaris/service-idl-gen-go/kitex_gen/basic"
 	"github.com/zeromicro/go-zero/core/stores/monc"
 	"go.mongodb.org/mongo-driver/bson"

@@ -5,8 +5,8 @@ package provider
 
 import (
 	"github.com/google/wire"
-	"github.com/xh-polaris/opeanapi-user/biz/adaptor"
-	"github.com/xh-polaris/opeanapi-user/provider"
+	"github.com/xh-polaris/openapi-user/biz/adaptor"
+	"github.com/xh-polaris/openapi-user/provider"
 )
 
 func NewProvider() (*adaptor.UserServer, error) {

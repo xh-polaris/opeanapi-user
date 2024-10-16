@@ -7,7 +7,7 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
-	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/config"
+	"github.com/xh-polaris/openapi-user/biz/infrastructure/config"
 	"io"
 	"strings"
 	"time"

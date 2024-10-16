@@ -7,12 +7,12 @@
 package provider
 
 import (
-	"github.com/xh-polaris/opeanapi-user/biz/adaptor"
-	"github.com/xh-polaris/opeanapi-user/biz/adaptor/controller"
-	"github.com/xh-polaris/opeanapi-user/biz/application/service"
-	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/config"
-	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/mapper/key"
-	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/mapper/user"
+	"github.com/xh-polaris/openapi-user/biz/adaptor"
+	"github.com/xh-polaris/openapi-user/biz/adaptor/controller"
+	"github.com/xh-polaris/openapi-user/biz/application/service"
+	"github.com/xh-polaris/openapi-user/biz/infrastructure/config"
+	"github.com/xh-polaris/openapi-user/biz/infrastructure/mapper/key"
+	"github.com/xh-polaris/openapi-user/biz/infrastructure/mapper/user"
 )
 
 // Injectors from wire.go:

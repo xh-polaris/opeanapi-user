@@ -182,8 +182,8 @@ github.com/xdg-go/stringprep v1.0.4 h1:XLI/Ng3O1Atzq0oBs3TWm+5ZVgkq2aqdlvP9JtoZ6
 github.com/xdg-go/stringprep v1.0.4/go.mod h1:mPGuuIYwz7CmR2bT9j4GbQqutWS1zV24gijq1dTyGkM=
 github.com/xh-polaris/gopkg v0.0.0-20240424152329-9162fdb0eef9 h1:C77LIsAjkwP5B1NnXRtEAqIaKknKU/B0/18sC7rQPug=
 github.com/xh-polaris/gopkg v0.0.0-20240424152329-9162fdb0eef9/go.mod h1:iuTX4c9raQCv45PeZ1s6Ixy1/CP37kSjOxHpkhiNQLc=
-github.com/xh-polaris/service-idl-gen-go v0.0.0-20241012084152-8df826215ba1 h1:FdyY/QnjKZdyIaOQ5agPltg5gAIQ6xzxS7YPJv05hlU=
-github.com/xh-polaris/service-idl-gen-go v0.0.0-20241012084152-8df826215ba1/go.mod h1:3ixuadpEpTumm8RftVwtXYH8Zfmu6shi33Hh5GKC6cU=
+github.com/xh-polaris/opeanapi-user v0.0.0-20241015121255-da9dc3fb27a6 h1:AnsajEPnTHnOqahfU3fBiPEC1NnbsR4iiAQu7/bqe1w=
+github.com/xh-polaris/opeanapi-user v0.0.0-20241015121255-da9dc3fb27a6/go.mod h1:+M1AoQO8jrqkU5Xese2yfGmOLHtzn1GBX+ogYcBtYd8=
 github.com/xh-polaris/service-idl-gen-go v0.0.0-20241016114256-432d4854cafa h1:2EnS4cIH1cT4xpPuUtJgiWKM+wP8upWOJ11jx37te54=
 github.com/xh-polaris/service-idl-gen-go v0.0.0-20241016114256-432d4854cafa/go.mod h1:3ixuadpEpTumm8RftVwtXYH8Zfmu6shi33Hh5GKC6cU=
 github.com/youmark/pkcs8 v0.0.0-20201027041543-1326539a0a0a h1:fZHgsYlfvtyqToslyjUt3VOPF4J7aK/3MPcK7xp3PDk=
