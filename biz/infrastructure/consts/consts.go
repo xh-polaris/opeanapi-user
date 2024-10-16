@@ -29,6 +29,6 @@ const (
 
 // 提示词
 const (
-	RemainIncrease = "余额增加"
-	RemainDecrease = "余额减少"
+	RemainIncrease     = "余额 "
+	RemainInsufficient = "余额不足"
 )

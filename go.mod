@@ -10,7 +10,7 @@ require (
 	github.com/jinzhu/copier v0.4.0
 	github.com/kitex-contrib/obs-opentelemetry v0.2.3
 	github.com/xh-polaris/gopkg v0.0.0-20240424152329-9162fdb0eef9
-	github.com/xh-polaris/service-idl-gen-go v0.0.0-20241012084152-8df826215ba1
+	github.com/xh-polaris/service-idl-gen-go v0.0.0-20241016114256-432d4854cafa
 	github.com/zeromicro/go-zero v1.7.2
 	go.mongodb.org/mongo-driver v1.16.1
 	golang.org/x/net v0.28.0

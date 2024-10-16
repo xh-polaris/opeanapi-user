@@ -34,12 +34,9 @@ func (s *MoneyService) SetRemain(ctx context.Context, req *user.SetRemainReq) (*
 		}, err
 	}
 	remain := aUser.Remain
-	if increment > 0 {
+	if (increment > 0) || (increment+remain > 0) {
 		remain += increment
 		msg = consts.RemainIncrease + strconv.FormatInt(increment, 10)
-	} else if remain+increment > 0 {
-		remain -= increment
-		msg = consts.RemainDecrease + strconv.FormatInt(increment, 10)
 	} else {
 		return &user.SetRemainResp{
 			Done: false,
@@ -49,7 +46,10 @@ func (s *MoneyService) SetRemain(ctx context.Context, req *user.SetRemainReq) (*
 	aUser.Remain = remain
 	err = s.UserMongoMapper.Update(ctx, aUser)
 	if err != nil {
-		return &user.SetRemainResp{}, err
+		return &user.SetRemainResp{
+			Done: false,
+			Msg:  "余额更新失败",
+		}, err
 	}
 	return &user.SetRemainResp{
 		Done: true,
