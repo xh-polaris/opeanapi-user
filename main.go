@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/config"
-	"github.com/xh-polaris/opeanapi-user/biz/infrastructure/util/log"
-	"github.com/xh-polaris/opeanapi-user/provider"
+	"github.com/xh-polaris/openapi-user/biz/infrastructure/config"
+	"github.com/xh-polaris/openapi-user/biz/infrastructure/util/log"
+	"github.com/xh-polaris/openapi-user/provider"
 	"github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/user/user"
 	"net"
 
