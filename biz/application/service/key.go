@@ -86,6 +86,7 @@ func (s *KeyService) GetKey(ctx context.Context, req *user.GetKeysReq) (*user.Ge
 		k.Id = val.ID.Hex()
 		k.CreateTime = val.CreateTime.Unix()
 		k.UpdateTime = val.UpdateTime.Unix()
+		k.Status = user.KeyStatus(val.Status)
 		keys = append(keys, k)
 	}
 	return &user.GetKeysResp{
