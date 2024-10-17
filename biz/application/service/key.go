@@ -31,7 +31,7 @@ var KeyServiceSet = wire.NewSet(
 )
 
 func (s *KeyService) CreateKey(ctx context.Context, req *user.CreateKeyReq) (*user.CreateKeyResp, error) {
-	userId := req.User.UserId
+	userId := req.UserId
 	// 名字初始化
 	name := req.Name
 	if name == "" { // 默认key名字
@@ -72,7 +72,7 @@ func (s *KeyService) CreateKey(ctx context.Context, req *user.CreateKeyReq) (*us
 }
 
 func (s *KeyService) GetKey(ctx context.Context, req *user.GetKeysReq) (*user.GetKeysResp, error) {
-	data, total, err := s.KeyMongoMapper.FindAndCount(ctx, req.User.UserId, req.PaginationOptions)
+	data, total, err := s.KeyMongoMapper.FindAndCount(ctx, req.UserId, req.PaginationOptions)
 	if err != nil {
 		return nil, err
 	}

@@ -23,7 +23,7 @@ var MoneyServiceSet = wire.NewSet(
 )
 
 func (s *MoneyService) SetRemain(ctx context.Context, req *user.SetRemainReq) (*user.SetRemainResp, error) {
-	id := req.User.UserId
+	id := req.UserId
 	increment := req.Increment
 	var msg string
 	aUser, err := s.UserMongoMapper.FindOne(ctx, id)

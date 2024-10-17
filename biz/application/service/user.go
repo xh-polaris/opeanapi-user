@@ -26,7 +26,7 @@ var UserServiceSet = wire.NewSet(
 )
 
 func (s *UserService) SignUp(ctx context.Context, req *user.SignUpReq) (*user.SignUpResp, error) {
-	id, err := primitive.ObjectIDFromHex(req.User.UserId)
+	id, err := primitive.ObjectIDFromHex(req.UserId)
 	if err != nil {
 		return nil, consts.ErrInvalidObjectId
 	}
@@ -66,7 +66,7 @@ func (s *UserService) SignUp(ctx context.Context, req *user.SignUpReq) (*user.Si
 }
 
 func (s *UserService) GetUserInfo(ctx context.Context, req *user.GetUserInfoReq) (*user.GetUserInfoResp, error) {
-	id := req.User.UserId
+	id := req.UserId
 	aUser, err := s.UserMongoMapper.FindOne(ctx, id)
 	if err != nil {
 		return nil, err
@@ -81,7 +81,7 @@ func (s *UserService) GetUserInfo(ctx context.Context, req *user.GetUserInfoReq)
 }
 
 func (s *UserService) SetUserInfo(ctx context.Context, req *user.SetUserInfoReq) (*user.SetUserInfoResp, error) {
-	id := req.User.UserId
+	id := req.UserId
 	aUser, err := s.UserMongoMapper.FindOne(ctx, id)
 	if err != nil {
 		return &user.SetUserInfoResp{
