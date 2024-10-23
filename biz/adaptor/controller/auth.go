@@ -17,6 +17,7 @@ type IAuthController interface {
 	UpdateHosts(ctx context.Context, req *user.UpdateHostsReq) (r *user.UpdateHostsResp, err error)
 	RefreshKey(ctx context.Context, req *user.RefreshKeyReq) (r *user.RefreshKeyResp, err error)
 	DeleteKey(ctx context.Context, req *user.DeleteKeyReq) (r *user.DeleteKeyResp, err error)
+	GetKeyForCheck(ctx context.Context, req *user.GetKeyForCheckReq) (r *user.GetKeyForCheckResp, err error)
 }
 
 type AuthController struct {
@@ -63,4 +64,8 @@ func (c *AuthController) RefreshKey(ctx context.Context, req *user.RefreshKeyReq
 
 func (c *AuthController) DeleteKey(ctx context.Context, req *user.DeleteKeyReq) (r *user.DeleteKeyResp, err error) {
 	return c.KeyService.DeleteKey(ctx, req)
+}
+
+func (c *AuthController) GetKeyForCheck(ctx context.Context, req *user.GetKeyForCheckReq) (r *user.GetKeyForCheckResp, err error) {
+	return c.KeyService.GetKeyForCheck(ctx, req)
 }

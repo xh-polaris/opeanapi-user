@@ -22,8 +22,9 @@ const (
 type IMongoMapper interface {
 	Insert(ctx context.Context, k *Key) error
 	Update(ctx context.Context, k *Key) error
-	UpdateWithTime(ctx context.Context, k *Key, updateTime time.Time) error
+	UpdateWithTimestamp(ctx context.Context, k *Key, updateTime time.Time) error
 	FindOne(ctx context.Context, id string) (*Key, error)
+	FindOneByContent(ctx context.Context, content string) (*Key, error)
 	Delete(ctx context.Context, id string) error
 	FindAndCount(ctx context.Context, userId string, p *basic.PaginationOptions) ([]*Key, int64, error)
 	Count(ctx context.Context, userId string) (int64, error)
@@ -58,8 +59,8 @@ func (m *MongoMapper) Update(ctx context.Context, k *Key) error {
 	return err
 }
 
-func (m *MongoMapper) UpdateWithTime(ctx context.Context, k *Key, updateTime time.Time) error {
-	k.UpdateTime = updateTime
+func (m *MongoMapper) UpdateWithTimestamp(ctx context.Context, k *Key, timestamp int64) error {
+	k.Timestamp = time.Unix(timestamp, 0)
 	key := prefixKeyCacheKey + k.ID.Hex()
 	_, err := m.conn.UpdateByID(ctx, key, k.ID, bson.M{"$set": k})
 	return err
@@ -76,6 +77,24 @@ func (m *MongoMapper) FindOne(ctx context.Context, id string) (*Key, error) {
 		bson.M{
 			consts.ID:     oid,
 			consts.Status: bson.M{"$ne": consts.DeleteStatus},
+		})
+
+	switch {
+	case err == nil:
+		return &k, nil
+	case errors.Is(err, monc.ErrNotFound):
+		return nil, consts.ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
+func (m *MongoMapper) FindOneByContent(ctx context.Context, content string) (*Key, error) {
+	var k Key
+	key := prefixKeyCacheKey + content
+	err := m.conn.FindOne(ctx, key, &k,
+		bson.M{
+			consts.Content: content,
 		})
 
 	switch {

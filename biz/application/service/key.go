@@ -201,3 +201,89 @@ func (s *KeyService) DeleteKey(ctx context.Context, req *user.DeleteKeyReq) (*us
 		Msg:  "删除密钥成功",
 	}, nil
 }
+
+func (s *KeyService) GetKeyForCheck(ctx context.Context, req *user.GetKeyForCheckReq) (*user.GetKeyForCheckResp, error) {
+	content := req.Content
+	host := req.Host
+	timestamp := req.Timestamp
+
+	// 根据密钥内容获取密钥
+	k, err := s.KeyMongoMapper.FindOneByContent(ctx, content)
+	if err != nil {
+		return &user.GetKeyForCheckResp{
+			Id:     "",
+			UserId: "",
+			Check:  false,
+			Msg:    "查询密钥失败",
+		}, err
+	}
+
+	// 解析密钥
+	id, userId, freshTime, err := util.GetKeyManager().ParseKey(content)
+	if err != nil {
+		return &user.GetKeyForCheckResp{
+			Id:     "",
+			UserId: "",
+			Check:  false,
+			Msg:    "密钥解析失败",
+		}, err
+	}
+
+	// 校对密钥正确性
+	if k.ID.Hex() != id || k.UserId != userId || k.UpdateTime != freshTime {
+		return &user.GetKeyForCheckResp{
+			Id:     k.ID.Hex(),
+			UserId: k.UserId,
+			Check:  false,
+			Msg:    "密钥权限校验失败",
+		}, consts.ErrParse
+	}
+
+	// 校验密钥是否继续生效
+	if k.Status != consts.EffectStatus || timestamp > k.ExpireTime.Unix() {
+		return &user.GetKeyForCheckResp{
+			Id:     k.ID.Hex(),
+			UserId: k.UserId,
+			Check:  false,
+			Msg:    "密钥不可用或已过期",
+		}, consts.ErrKeyUnavailable
+	}
+
+	// 校验域名是否符合要求
+	if !contains(k.Hosts, host) {
+		return &user.GetKeyForCheckResp{
+			Id:     k.ID.Hex(),
+			UserId: k.UserId,
+			Check:  false,
+			Msg:    "域名未被纳入白名单",
+		}, consts.ErrHostUnavailable
+	}
+
+	// 校验通过，更新密钥最新的调用时间
+	err = s.KeyMongoMapper.UpdateWithTimestamp(ctx, k, timestamp)
+	if err != nil {
+		return &user.GetKeyForCheckResp{
+			Id:     k.ID.Hex(),
+			UserId: k.UserId,
+			Check:  true,
+			Msg:    "最近调用时间更新失败",
+		}, consts.ErrUpdate
+	}
+
+	return &user.GetKeyForCheckResp{
+		Id:     k.ID.Hex(),
+		UserId: k.UserId,
+		Check:  true,
+		Msg:    "校验成功",
+	}, nil
+}
+
+// contains 检查给定的 host 是否在 hosts 切片中
+func contains(hosts []string, host string) bool {
+	for _, h := range hosts {
+		if h == host {
+			return true
+		}
+	}
+	return false
+}

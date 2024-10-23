@@ -17,6 +17,8 @@ const (
 	UserID       = "user_id"
 	Status       = "status"
 	DeleteStatus = 3
+	EffectStatus = 0
+	Content      = "content"
 )
 
 // 默认值
