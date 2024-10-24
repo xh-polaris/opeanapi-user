@@ -26,6 +26,15 @@ var UserServiceSet = wire.NewSet(
 )
 
 func (s *UserService) SignUp(ctx context.Context, req *user.SignUpReq) (*user.SignUpResp, error) {
+	// 判断是否先前初始化过
+	one, err := s.UserMongoMapper.FindOne(ctx, req.UserId)
+	if err == nil && one != nil {
+		return &user.SignUpResp{
+			Done: false,
+			Msg:  "重复创建用户",
+		}, nil
+	}
+
 	id, err := primitive.ObjectIDFromHex(req.UserId)
 	if err != nil {
 		return nil, consts.ErrInvalidObjectId
@@ -72,6 +81,7 @@ func (s *UserService) GetUserInfo(ctx context.Context, req *user.GetUserInfoReq)
 		return nil, err
 	}
 	return &user.GetUserInfoResp{
+		UserId:   aUser.ID.Hex(),
 		Username: aUser.Username,
 		Role:     user.Role(aUser.Role),
 		Auth:     aUser.Auth,
