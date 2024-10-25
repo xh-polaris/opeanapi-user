@@ -182,12 +182,6 @@ github.com/xdg-go/stringprep v1.0.4 h1:XLI/Ng3O1Atzq0oBs3TWm+5ZVgkq2aqdlvP9JtoZ6
 github.com/xdg-go/stringprep v1.0.4/go.mod h1:mPGuuIYwz7CmR2bT9j4GbQqutWS1zV24gijq1dTyGkM=
 github.com/xh-polaris/gopkg v0.0.0-20240424152329-9162fdb0eef9 h1:C77LIsAjkwP5B1NnXRtEAqIaKknKU/B0/18sC7rQPug=
 github.com/xh-polaris/gopkg v0.0.0-20240424152329-9162fdb0eef9/go.mod h1:iuTX4c9raQCv45PeZ1s6Ixy1/CP37kSjOxHpkhiNQLc=
-github.com/xh-polaris/service-idl-gen-go v0.0.0-20241024082915-1f9d31ac06e1 h1:/da/GZaDdFjs4KQ15lTwlrNv2OI+wMW4rV7mIzD9We4=
-github.com/xh-polaris/service-idl-gen-go v0.0.0-20241024082915-1f9d31ac06e1/go.mod h1:3ixuadpEpTumm8RftVwtXYH8Zfmu6shi33Hh5GKC6cU=
-github.com/xh-polaris/service-idl-gen-go v0.0.0-20241025045210-7e5fd7ed04db h1:KW+4mZtfj1ovMivtXY+cr5v+ghSOeoto0kWTnlpP5cY=
-github.com/xh-polaris/service-idl-gen-go v0.0.0-20241025045210-7e5fd7ed04db/go.mod h1:3ixuadpEpTumm8RftVwtXYH8Zfmu6shi33Hh5GKC6cU=
-github.com/xh-polaris/service-idl-gen-go v0.0.0-20241025051243-b661ec82bbf8 h1:4bnMU0cbWKf+dLSFJAmnOGd+Ay/kbuZMhkNlcuGNWnE=
-github.com/xh-polaris/service-idl-gen-go v0.0.0-20241025051243-b661ec82bbf8/go.mod h1:3ixuadpEpTumm8RftVwtXYH8Zfmu6shi33Hh5GKC6cU=
 github.com/xh-polaris/service-idl-gen-go v0.0.0-20241025051903-37040b10fa7f h1:XRdrIm0sqDzyQ13uD60eYixbcbtYlO2O5MAEfcu4YmQ=
 github.com/xh-polaris/service-idl-gen-go v0.0.0-20241025051903-37040b10fa7f/go.mod h1:3ixuadpEpTumm8RftVwtXYH8Zfmu6shi33Hh5GKC6cU=
 github.com/youmark/pkcs8 v0.0.0-20201027041543-1326539a0a0a h1:fZHgsYlfvtyqToslyjUt3VOPF4J7aK/3MPcK7xp3PDk=
