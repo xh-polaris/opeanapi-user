@@ -40,15 +40,13 @@ func (m *MongoMapper) Insert(ctx context.Context, user *User) error {
 		user.CreateTime = time.Now()
 		user.UpdateTime = user.CreateTime
 	}
-	key := prefixUserCacheKey + user.ID.Hex()
-	_, err := m.conn.InsertOne(ctx, key, user)
+	_, err := m.conn.InsertOneNoCache(ctx, user)
 	return err
 }
 
 func (m *MongoMapper) Update(ctx context.Context, user *User) error {
 	user.UpdateTime = time.Now()
-	key := prefixUserCacheKey + user.ID.Hex()
-	_, err := m.conn.UpdateByID(ctx, key, user.ID, bson.M{"$set": user})
+	_, err := m.conn.UpdateByIDNoCache(ctx, user.ID, bson.M{"$set": user})
 	return err
 }
 
@@ -58,8 +56,7 @@ func (m *MongoMapper) FindOne(ctx context.Context, id string) (*User, error) {
 		return nil, consts.ErrInvalidObjectId
 	}
 	var user User
-	key := prefixUserCacheKey + oid.Hex()
-	err = m.conn.FindOne(ctx, key, &user, bson.M{
+	err = m.conn.FindOneNoCache(ctx, &user, bson.M{
 		consts.ID:     oid,
 		consts.Status: bson.M{"$ne": consts.DeleteStatus},
 	})
@@ -80,8 +77,7 @@ func (m *MongoMapper) Delete(ctx context.Context, id string) error {
 		return consts.ErrInvalidObjectId
 	}
 	var user User
-	key := prefixUserCacheKey + oid.Hex()
-	err = m.conn.FindOne(ctx, key, &user, bson.M{consts.ID: oid})
+	err = m.conn.FindOneNoCache(ctx, &user, bson.M{consts.ID: oid})
 
 	if err != nil {
 		return err
@@ -90,6 +86,6 @@ func (m *MongoMapper) Delete(ctx context.Context, id string) error {
 	user.DeleteTime = time.Now()
 	user.UpdateTime = time.Now()
 	user.Status = consts.DeleteStatus
-	_, err = m.conn.UpdateByID(ctx, key, user.ID, bson.M{"$set": user})
+	_, err = m.conn.UpdateByIDNoCache(ctx, user.ID, bson.M{"$set": user})
 	return err
 }

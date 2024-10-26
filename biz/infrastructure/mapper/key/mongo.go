@@ -47,22 +47,19 @@ func (m *MongoMapper) Insert(ctx context.Context, k *Key) error {
 		k.CreateTime = time.Now()
 		k.UpdateTime = k.CreateTime
 	}
-	key := prefixKeyCacheKey + k.ID.Hex()
-	_, err := m.conn.InsertOne(ctx, key, k)
+	_, err := m.conn.InsertOneNoCache(ctx, k)
 	return err
 }
 
 func (m *MongoMapper) Update(ctx context.Context, k *Key) error {
 	k.UpdateTime = time.Now()
-	key := prefixKeyCacheKey + k.ID.Hex()
-	_, err := m.conn.UpdateByID(ctx, key, k.ID, bson.M{"$set": k})
+	_, err := m.conn.UpdateByIDNoCache(ctx, k.ID, bson.M{"$set": k})
 	return err
 }
 
 func (m *MongoMapper) UpdateWithTimestamp(ctx context.Context, k *Key, timestamp int64) error {
 	k.Timestamp = time.Unix(timestamp, 0)
-	key := prefixKeyCacheKey + k.ID.Hex()
-	_, err := m.conn.UpdateByID(ctx, key, k.ID, bson.M{"$set": k})
+	_, err := m.conn.UpdateByIDNoCache(ctx, k.ID, bson.M{"$set": k})
 	return err
 }
 
@@ -72,8 +69,7 @@ func (m *MongoMapper) FindOne(ctx context.Context, id string) (*Key, error) {
 		return nil, consts.ErrInvalidObjectId
 	}
 	var k Key
-	key := prefixKeyCacheKey + oid.Hex()
-	err = m.conn.FindOne(ctx, key, &k,
+	err = m.conn.FindOneNoCache(ctx, &k,
 		bson.M{
 			consts.ID:     oid,
 			consts.Status: bson.M{"$ne": consts.DeleteStatus},
@@ -91,8 +87,7 @@ func (m *MongoMapper) FindOne(ctx context.Context, id string) (*Key, error) {
 
 func (m *MongoMapper) FindOneByContent(ctx context.Context, content string) (*Key, error) {
 	var k Key
-	key := prefixKeyCacheKey + content
-	err := m.conn.FindOne(ctx, key, &k,
+	err := m.conn.FindOneNoCache(ctx, &k,
 		bson.M{
 			consts.Content: content,
 		})
@@ -139,8 +134,7 @@ func (m *MongoMapper) Delete(ctx context.Context, id string) error {
 		return consts.ErrInvalidObjectId
 	}
 	var k Key
-	key := prefixKeyCacheKey + oid.Hex()
-	err = m.conn.FindOne(ctx, key, &k, bson.M{consts.ID: oid})
+	err = m.conn.FindOneNoCache(ctx, &k, bson.M{consts.ID: oid})
 
 	if err != nil {
 		return err
@@ -149,7 +143,7 @@ func (m *MongoMapper) Delete(ctx context.Context, id string) error {
 	k.DeleteTime = time.Now()
 	k.UpdateTime = time.Now()
 	k.Status = consts.DeleteStatus
-	_, err = m.conn.UpdateByID(ctx, key, k.ID, bson.M{"$set": k})
+	_, err = m.conn.UpdateByIDNoCache(ctx, k.ID, bson.M{"$set": k})
 	return err
 }
 
