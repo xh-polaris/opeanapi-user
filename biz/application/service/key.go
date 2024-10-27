@@ -6,6 +6,7 @@ import (
 	"github.com/jinzhu/copier"
 	"github.com/xh-polaris/openapi-user/biz/infrastructure/consts"
 	"github.com/xh-polaris/openapi-user/biz/infrastructure/mapper/key"
+	usermapper "github.com/xh-polaris/openapi-user/biz/infrastructure/mapper/user"
 	"github.com/xh-polaris/openapi-user/biz/infrastructure/util"
 	"github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/user"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -22,7 +23,8 @@ type IKeyService interface {
 }
 
 type KeyService struct {
-	KeyMongoMapper *key.MongoMapper
+	KeyMongoMapper  *key.MongoMapper
+	UserMongoMapper *usermapper.MongoMapper
 }
 
 var KeyServiceSet = wire.NewSet(
@@ -272,11 +274,22 @@ func (s *KeyService) GetKeyForCheck(ctx context.Context, req *user.GetKeyForChec
 		}, consts.ErrUpdate
 	}
 
+	one, err := s.UserMongoMapper.FindOne(ctx, k.UserId)
+	if err != nil {
+		return &user.GetKeyForCheckResp{
+			Id:     k.ID.Hex(),
+			UserId: k.UserId,
+			Check:  true,
+			Msg:    "最近调用时间更新失败",
+		}, nil
+	}
+
 	return &user.GetKeyForCheckResp{
 		Id:     k.ID.Hex(),
 		UserId: k.UserId,
 		Check:  true,
 		Msg:    "校验成功",
+		Role:   user.Role(one.Role),
 	}, nil
 }
 
