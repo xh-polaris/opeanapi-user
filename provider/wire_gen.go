@@ -23,10 +23,11 @@ func NewProvider() (*adaptor.UserServer, error) {
 		return nil, err
 	}
 	mongoMapper := key.NewMongoMapper(configConfig)
-	keyService := &service.KeyService{
-		KeyMongoMapper: mongoMapper,
-	}
 	userMongoMapper := user.NewMongoMapper(configConfig)
+	keyService := &service.KeyService{
+		KeyMongoMapper:  mongoMapper,
+		UserMongoMapper: userMongoMapper,
+	}
 	userService := &service.UserService{
 		UserMongoMapper: userMongoMapper,
 	}
