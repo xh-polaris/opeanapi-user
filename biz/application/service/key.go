@@ -221,7 +221,7 @@ func (s *KeyService) GetKeyForCheck(ctx context.Context, req *user.GetKeyForChec
 	}
 
 	// 解析密钥
-	id, userId, freshTime, err := util.GetKeyManager().ParseKey(content)
+	id, userId, _, err := util.GetKeyManager().ParseKey(content)
 	if err != nil {
 		return &user.GetKeyForCheckResp{
 			Id:     "",
@@ -232,7 +232,7 @@ func (s *KeyService) GetKeyForCheck(ctx context.Context, req *user.GetKeyForChec
 	}
 
 	// 校对密钥正确性
-	if k.ID.Hex() != id || k.UserId != userId || k.UpdateTime != freshTime {
+	if k.ID.Hex() != id || k.UserId != userId || k.Content != content {
 		return &user.GetKeyForCheckResp{
 			Id:     k.ID.Hex(),
 			UserId: k.UserId,
@@ -252,7 +252,7 @@ func (s *KeyService) GetKeyForCheck(ctx context.Context, req *user.GetKeyForChec
 	}
 
 	// 校验域名是否符合要求
-	if !contains(k.Hosts, host) {
+	if k.Hosts != nil && len(k.Hosts) != 0 && !contains(k.Hosts, host) {
 		return &user.GetKeyForCheckResp{
 			Id:     k.ID.Hex(),
 			UserId: k.UserId,
