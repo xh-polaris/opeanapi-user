@@ -18,8 +18,9 @@ var keyManager *KeyManager
 
 func GetKeyManager() *KeyManager {
 	if keyManager == nil {
+		c, _ := config.NewConfig()
 		keyManager = &KeyManager{
-			Config: config.GetConfig(),
+			Config: c,
 		}
 	}
 	return keyManager
