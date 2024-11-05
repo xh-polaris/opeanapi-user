@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 	"github.com/google/wire"
-	"github.com/xh-polaris/openapi-user/biz/infrastructure/consts"
 	usermapper "github.com/xh-polaris/openapi-user/biz/infrastructure/mapper/user"
+	usertransaction "github.com/xh-polaris/openapi-user/biz/infrastructure/transaction"
 	"github.com/xh-polaris/service-idl-gen-go/kitex_gen/openapi/user"
 	"strconv"
 )
@@ -15,6 +15,7 @@ type IMoneyService interface {
 
 type MoneyService struct {
 	UserMongoMapper *usermapper.MongoMapper
+	UserTransaction *usertransaction.UserTransaction
 }
 
 var MoneyServiceSet = wire.NewSet(
@@ -25,26 +26,7 @@ var MoneyServiceSet = wire.NewSet(
 func (s *MoneyService) SetRemain(ctx context.Context, req *user.SetRemainReq) (*user.SetRemainResp, error) {
 	id := req.UserId
 	increment := req.Increment
-	var msg string
-	aUser, err := s.UserMongoMapper.FindOne(ctx, id)
-	if err != nil || aUser == nil {
-		return &user.SetRemainResp{
-			Done: false,
-			Msg:  "用户不存在或已删除",
-		}, err
-	}
-	remain := aUser.Remain
-	if (increment > 0) || (increment+remain > 0) {
-		remain += increment
-		msg = consts.RemainIncrease + strconv.FormatInt(increment, 10)
-	} else {
-		return &user.SetRemainResp{
-			Done: false,
-			Msg:  "余额不足",
-		}, err
-	}
-	aUser.Remain = remain
-	err = s.UserMongoMapper.Update(ctx, aUser)
+	err := s.UserTransaction.UpdateRemain(ctx, id, increment)
 	if err != nil {
 		return &user.SetRemainResp{
 			Done: false,
@@ -53,6 +35,6 @@ func (s *MoneyService) SetRemain(ctx context.Context, req *user.SetRemainReq) (*
 	}
 	return &user.SetRemainResp{
 		Done: true,
-		Msg:  msg,
+		Msg:  "余额更新成功" + strconv.FormatInt(increment, 10),
 	}, nil
 }

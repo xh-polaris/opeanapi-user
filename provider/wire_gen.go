@@ -13,6 +13,7 @@ import (
 	"github.com/xh-polaris/openapi-user/biz/infrastructure/config"
 	"github.com/xh-polaris/openapi-user/biz/infrastructure/mapper/key"
 	"github.com/xh-polaris/openapi-user/biz/infrastructure/mapper/user"
+	"github.com/xh-polaris/openapi-user/biz/infrastructure/transaction"
 )
 
 // Injectors from wire.go:
@@ -35,8 +36,10 @@ func NewProvider() (*adaptor.UserServer, error) {
 		KeyService:  keyService,
 		UserService: userService,
 	}
+	userTransaction := transaction.NewUserTransaction(configConfig)
 	moneyService := &service.MoneyService{
 		UserMongoMapper: userMongoMapper,
+		UserTransaction: userTransaction,
 	}
 	moneyController := &controller.MoneyController{
 		MoneyService: moneyService,

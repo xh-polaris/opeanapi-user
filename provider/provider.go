@@ -7,6 +7,7 @@ import (
 	"github.com/xh-polaris/openapi-user/biz/infrastructure/config"
 	"github.com/xh-polaris/openapi-user/biz/infrastructure/mapper/key"
 	"github.com/xh-polaris/openapi-user/biz/infrastructure/mapper/user"
+	"github.com/xh-polaris/openapi-user/biz/infrastructure/transaction"
 )
 
 var UserServerProvider = wire.NewSet(
@@ -29,9 +30,14 @@ var ApplicationSet = wire.NewSet(
 var InfrastructureSet = wire.NewSet(
 	config.NewConfig,
 	MapperSet,
+	TransactionSet,
 )
 
 var MapperSet = wire.NewSet(
 	key.NewMongoMapper,
 	user.NewMongoMapper,
+)
+
+var TransactionSet = wire.NewSet(
+	transaction.NewUserTransaction,
 )
