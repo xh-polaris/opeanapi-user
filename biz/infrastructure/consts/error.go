@@ -10,4 +10,5 @@ var (
 	ErrHostUnavailable    = errors.New("host is unavailable")
 	ErrUpdate             = errors.New("update failed")
 	ErrInSufficientRemain = errors.New("insufficient remain")
+	ErrAccount            = errors.New("insert account error")
 )

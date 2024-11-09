@@ -26,7 +26,13 @@ var MoneyServiceSet = wire.NewSet(
 func (s *MoneyService) SetRemain(ctx context.Context, req *user.SetRemainReq) (*user.SetRemainResp, error) {
 	id := req.UserId
 	increment := req.Increment
-	err := s.UserTransaction.UpdateRemain(ctx, id, increment)
+
+	var txId string
+	if req.TxId != nil {
+		txId = *req.TxId
+	}
+
+	err := s.UserTransaction.UpdateRemain(ctx, id, increment, txId)
 	if err != nil {
 		return &user.SetRemainResp{
 			Done: false,
