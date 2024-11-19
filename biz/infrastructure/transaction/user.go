@@ -73,7 +73,7 @@ func (t *UserTransaction) UpdateRemain(ctx context.Context, id string, increment
 				return nil, consts.ErrUpdate
 			}
 
-			// TODO 新增流水
+			// 新增流水
 			aAccount := &account.Account{
 				ID:         primitive.NewObjectID(),
 				TxId:       txId,

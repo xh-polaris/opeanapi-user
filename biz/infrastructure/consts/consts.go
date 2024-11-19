@@ -19,6 +19,7 @@ const (
 	DeleteStatus = 3
 	EffectStatus = 0
 	Content      = "content"
+	TxId         = "tx_id"
 )
 
 // 默认值

@@ -11,6 +11,7 @@ import (
 	"github.com/xh-polaris/openapi-user/biz/adaptor/controller"
 	"github.com/xh-polaris/openapi-user/biz/application/service"
 	"github.com/xh-polaris/openapi-user/biz/infrastructure/config"
+	"github.com/xh-polaris/openapi-user/biz/infrastructure/mapper/account"
 	"github.com/xh-polaris/openapi-user/biz/infrastructure/mapper/key"
 	"github.com/xh-polaris/openapi-user/biz/infrastructure/mapper/user"
 	"github.com/xh-polaris/openapi-user/biz/infrastructure/transaction"
@@ -41,8 +42,13 @@ func NewProvider() (*adaptor.UserServer, error) {
 		UserMongoMapper: userMongoMapper,
 		UserTransaction: userTransaction,
 	}
+	accountMongoMapper := account.NewMongoMapper(configConfig)
+	accountService := &service.AccountService{
+		AccountMongoMapper: accountMongoMapper,
+	}
 	moneyController := &controller.MoneyController{
-		MoneyService: moneyService,
+		MoneyService:   moneyService,
+		AccountService: accountService,
 	}
 	userServer := &adaptor.UserServer{
 		IAuthController:  authController,
