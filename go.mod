@@ -1,6 +1,7 @@
 module github.com/xh-polaris/openapi-user
 
 go 1.21
+toolchain go1.23.7
 
 require (
 	github.com/bytedance/gopkg v0.1.1
@@ -13,7 +14,7 @@ require (
 	github.com/xh-polaris/service-idl-gen-go v0.0.0-20241217080745-957498d2acb2
 	github.com/zeromicro/go-zero v1.7.2
 	go.mongodb.org/mongo-driver v1.16.1
-	golang.org/x/net v0.28.0
+	golang.org/x/net v0.36.0
 )
 
 require (
@@ -88,10 +89,10 @@ require (
 	go.opentelemetry.io/proto/otlp v1.3.1 // indirect
 	go.uber.org/automaxprocs v1.5.3 // indirect
 	golang.org/x/arch v0.2.0 // indirect
-	golang.org/x/crypto v0.26.0 // indirect
-	golang.org/x/sync v0.8.0 // indirect
-	golang.org/x/sys v0.24.0 // indirect
-	golang.org/x/text v0.17.0 // indirect
+	golang.org/x/crypto v0.35.0 // indirect
+	golang.org/x/sync v0.11.0 // indirect
+	golang.org/x/sys v0.30.0 // indirect
+	golang.org/x/text v0.22.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20240711142825-46eb208f015d // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240701130421-f6361c86f094 // indirect
 	google.golang.org/grpc v1.65.0 // indirect
